@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.rodriguezpacojr.winestore.admin.CRUDProduct">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/txtinsertProduct"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:text="Insert Product"
+            android:textSize="25dp"
+            android:textAlignment="center"
+            android:textStyle="bold"
+            android:layout_marginTop="25dp"
+            android:layout_centerHorizontal="true" />
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tilname"
+            android:layout_below="@+id/txtinsertProduct"
+            android:layout_marginTop="19dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp">
+            <EditText
+                android:id="@+id/edtnameProduct"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Name"
+                android:inputType="textCapWords" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tillastname"
+            android:layout_below="@+id/tilname"
+            android:layout_marginTop="19dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp">
+            <EditText
+                android:id="@+id/edtml"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Lts"
+                android:inputType="numberDecimal" />
+        </android.support.design.widget.TextInputLayout>
+
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tilborndate"
+            android:layout_below="@+id/tillastname"
+            android:layout_marginTop="19dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp">
+            <EditText
+                android:id="@+id/edtcolor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Color"
+                android:inputType="textCapWords"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tilemail"
+            android:layout_below="@+id/tilborndate"
+            android:layout_marginTop="19dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp">
+            <EditText
+                android:id="@+id/edttaste"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Taste"
+                android:inputType="textCapWords"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tilphone"
+            android:layout_below="@+id/tilemail"
+            android:layout_marginTop="19dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp">
+            <EditText
+                android:id="@+id/edtstock"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Stock"
+                android:inputType="number"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tilrfc"
+            android:layout_below="@+id/tilphone"
+            android:layout_marginTop="19dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp">
+            <EditText
+                android:id="@+id/edtsalesPrice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Sales Price"
+                android:inputType="numberDecimal"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <TextView
+            android:id="@+id/txtCategory"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:hint="Category"
+            android:textSize="18dp"
+            android:textAlignment="center"
+            android:layout_marginTop="19dp"
+            android:layout_below="@+id/tilrfc" />
+
+        <Spinner
+            android:id="@+id/spnCategory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/txtCategory"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"/>
+
+        <Button
+            android:id="@+id/btnRegister"
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="15dp"
+            android:layout_below="@+id/spnCategory"
+            android:layout_centerHorizontal="true"
+            android:textSize="18dp"
+            android:backgroundTint="@color/colorPrimaryDark"
+            android:text="Register"/>
+    </RelativeLayout>
+</ScrollView>

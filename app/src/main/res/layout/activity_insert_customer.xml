@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.rodriguezpacojr.winestore.admin.CRUDCustomer">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/txtinsertCustomer"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="25dp"
+            android:text="Insert Customer"
+            android:textAlignment="center"
+            android:textSize="25dp"
+            android:textStyle="bold" />
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/tilname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtinsertCustomer"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="19dp">
+
+            <EditText
+                android:id="@+id/edtname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Name"
+                android:inputType="textCapWords" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/tillastname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tilname"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="19dp">
+
+            <EditText
+                android:id="@+id/edtlastName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Last Name"
+                android:inputType="textCapWords" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/tilborndate"
+            android:layout_width="220dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tillastname"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="19dp">
+
+            <EditText
+                android:id="@+id/edtbornDate"
+                android:layout_width="210dp"
+                android:layout_height="wrap_content"
+                android:hint="Born Date"
+                android:inputType="text" />
+        </android.support.design.widget.TextInputLayout>
+
+        <ImageView
+            android:id="@+id/imgCalendarBD"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:layout_below="@id/tillastname"
+            android:layout_marginTop="12dp"
+            android:layout_toRightOf="@id/tilborndate"
+            android:src="@drawable/ic_calendar_black_24dp" />
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/tilemail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tilborndate"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="19dp">
+
+            <EditText
+                android:id="@+id/edtemail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Email"
+                android:inputType="textEmailAddress" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/tilphone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tilemail"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="19dp">
+
+            <EditText
+                android:id="@+id/edtphone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Phone"
+                android:inputType="phone" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/tilrfc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tilphone"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="19dp">
+
+            <EditText
+                android:id="@+id/edtrfc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="RFC"
+                android:inputType="textCapCharacters" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/tilentryDate"
+            android:layout_width="220dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tilrfc"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="19dp">
+
+            <EditText
+                android:id="@+id/edtentryDate"
+                android:layout_width="210dp"
+                android:layout_height="wrap_content"
+                android:hint="Entry Date"
+                android:inputType="text" />
+        </android.support.design.widget.TextInputLayout>
+
+        <ImageView
+            android:id="@+id/imgCalendarED"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:layout_below="@id/tilrfc"
+            android:layout_marginTop="12dp"
+            android:layout_toRightOf="@id/tilentryDate"
+            android:src="@drawable/ic_calendar_black_24dp" />
+
+
+        <TextView
+            android:id="@+id/txtRoute"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tilentryDate"
+            android:layout_marginTop="19dp"
+            android:hint="Route"
+            android:textAlignment="center"
+            android:textSize="18dp" />
+
+        <Spinner
+            android:id="@+id/spnRoute"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtRoute"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginTop="10dp"
+            android:textAlignment="center" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/locationControllerGPSMap"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/spnRoute"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="10dp"
+            android:onClick="openMap"
+            app:backgroundTint="@android:color/background_dark"
+            app:srcCompat="@android:drawable/ic_dialog_map" />
+
+        <TextView
+            android:id="@+id/latitudeTextGPS"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/locationControllerGPSMap"
+            android:layout_marginLeft="30dp"
+            android:text="Lat: "
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/latitudeValueGPS"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/locationControllerGPSMap"
+            android:layout_toRightOf="@id/longitudeTextGPS"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:text="0.0000"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/longitudeTextGPS"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/latitudeValueGPS"
+            android:layout_marginLeft="30dp"
+            android:text="Lng: "
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/longitudeValueGPS"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/latitudeValueGPS"
+            android:layout_toRightOf="@id/longitudeTextGPS"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:text="0.0000"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/btnRegister"
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:layout_below="@+id/longitudeValueGPS"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"
+            android:backgroundTint="@color/colorPrimaryDark"
+            android:text="Register"
+            android:textSize="18dp" />
+    </RelativeLayout>
+</ScrollView>

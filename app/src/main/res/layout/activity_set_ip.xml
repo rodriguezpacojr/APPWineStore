@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.rodriguezpacojr.winestore.SetIpActivity">
+
+    <TextView
+        android:id="@+id/txtsettings"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:text="Settings"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:layout_marginTop="25dp"
+        android:layout_centerHorizontal="true"/>
+
+    <EditText
+        android:id="@+id/edtipAddress"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:hint="Ip Address    "
+        android:inputType="text"
+        android:textAlignment="center"
+        android:layout_marginTop="30dp"
+        android:layout_below="@+id/txtsettings"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:id="@+id/edtportNumber"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:hint="Port Number"
+        android:inputType="text"
+        android:textAlignment="center"
+        android:layout_below="@+id/edtipAddress"
+        android:layout_marginTop="30dp"
+        android:layout_centerHorizontal="true" />
+
+
+    <Button
+        android:id="@+id/btnok"
+        android:layout_width="196dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="30dp"
+        android:textSize="17dp"
+        android:text="Ok"
+        android:layout_below="@+id/edtportNumber"
+        android:layout_centerHorizontal="true" />
+</RelativeLayout>

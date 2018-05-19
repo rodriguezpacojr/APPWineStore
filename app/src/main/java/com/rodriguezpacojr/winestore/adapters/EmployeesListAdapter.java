@@ -115,9 +115,9 @@ public class EmployeesListAdapter extends RecyclerView.Adapter<EmployeesListAdap
         holder.btnSms.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intSms = new Intent(Intent.ACTION_SEND);
-                intSms.setData(Uri.parse("smsto:"+person.getPhone()));
-                intSms.putExtra(intSms.EXTRA_TEXT,"This is a message from Andriod");
+                Intent intSms = new Intent(Intent.ACTION_SENDTO);
+                intSms.setData(Uri.parse("sms: "+person.getPhone()));
+                intSms.putExtra("sms_body","");
                 context.startActivity(intSms);
             }
         });
@@ -149,7 +149,6 @@ public class EmployeesListAdapter extends RecyclerView.Adapter<EmployeesListAdap
             @Override
             public void onClick(View view) {
                 flagUpdate = true;
-
                 key = person.getKeyPerson();
                 name = person.getName();
                 lastName = person.getLastName();

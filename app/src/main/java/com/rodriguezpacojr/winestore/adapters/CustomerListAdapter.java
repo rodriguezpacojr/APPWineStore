@@ -113,11 +113,12 @@ public class CustomerListAdapter extends RecyclerView.Adapter<CustomerListAdapte
         holder.btnSms.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intSms = new Intent(Intent.ACTION_SEND);
-                intSms.setData(Uri.parse("smsto:"+person.getPhone()));
-                intSms.putExtra(intSms.EXTRA_TEXT,"This is a message from Andriod");
+
+                Intent intSms = new Intent(Intent.ACTION_SENDTO);
+                intSms.setData(Uri.parse("sms: "+person.getPhone()));
+                intSms.putExtra("sms_body","");
                 context.startActivity(intSms);
-            }
+        }
         });
 
         holder.btnDelete.setOnClickListener(new View.OnClickListener() {

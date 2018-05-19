@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/itmOrder"
+        android:title="Products"
+        android:icon="@drawable/ic_store_white_24dp"
+        app:showAsAction="always|withText"/>
+    <item
+        android:id="@+id/itmCustomers"
+        android:title="Customers"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/itmRoutes"
+        android:title="Routes"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/itmAboutOf"
+        android:title="About Of..."
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/itmLogOut"
+        android:title="Log Out"
+        android:icon="@drawable/ic_shopping_cart_white_24dp"
+        app:showAsAction="never"/>
+    />
+</menu>

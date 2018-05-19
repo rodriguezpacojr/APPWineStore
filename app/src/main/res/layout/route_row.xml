@@ -30,7 +30,7 @@
             android:layout_toRightOf="@+id/ivImage"
             android:textColor="#1a4064"
             android:layout_marginLeft="10dp"
-            android:text="Number: "/>
+            android:text="Route: "/>
 
         <TextView
             android:id="@+id/tvnumberNumber"

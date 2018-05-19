@@ -2,10 +2,12 @@ package com.rodriguezpacojr.winestore;
 
 public class Setup {
 
-    public static String token;
-    public static String IP_ADDRESS;
-    public static String PORT_NUMBER;
-    public static String USER;
+    public static String token = "8a1cde295d303ac40368abc57342482f";
+    public static String IP_ADDRESS="192.168.0.5";
+    public static String PORT_NUMBER="8080";
+    public static String userName;
+    public static int keyCustomer;
+
     //========================================================================================
     public static String getToken() {
         return token;
@@ -31,11 +33,19 @@ public class Setup {
         PORT_NUMBER = portNumber;
     }
 
-    public static String getUSER() {
-        return USER;
+    public static String getUserName() {
+        return userName;
     }
 
-    public static void setUSER(String USER) {
-        Setup.USER = USER;
+    public static void setUserName(String userName) {
+        Setup.userName = userName;
+    }
+
+    public static int getKeyCustomer() {
+        return keyCustomer;
+    }
+
+    public static void setKeyCustomer(int keyCustomer) {
+        Setup.keyCustomer = keyCustomer;
     }
 }

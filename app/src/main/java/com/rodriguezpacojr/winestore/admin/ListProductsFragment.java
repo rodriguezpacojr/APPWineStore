@@ -37,7 +37,7 @@ public class ListProductsFragment extends Fragment implements Response.Listener<
     private RecyclerView rvproduct;
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
-    private FloatingActionButton btnAddItem;
+   // private FloatingActionButton btnAddItem;
 
     public static RequestQueue requestQueue;
     List<Product> productList;
@@ -58,7 +58,7 @@ public class ListProductsFragment extends Fragment implements Response.Listener<
         rvproduct.setLayoutManager(layoutManager);
 
 
-        btnAddItem = (FloatingActionButton) v.findViewById(R.id.btnAddItem);
+     /*   btnAddItem = (FloatingActionButton) v.findViewById(R.id.btnAddItem);
         btnAddItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -68,7 +68,7 @@ public class ListProductsFragment extends Fragment implements Response.Listener<
                 getActivity().finish();
             }
         });
-
+*/
         return v;
     }
 

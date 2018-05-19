@@ -71,9 +71,12 @@ public class CRUDRoute extends AppCompatActivity implements Response.Listener<St
 
         if (RoutesListAdapter.flatUpdate)
             fillFields();
+        else
+            btnRegister.setText("REGISTER");
     }
 
     void fillFields(){
+        btnRegister.setText("UPDATE");
         tvtittle.setText("Update Route");
         edtnameRoute.setText(RoutesListAdapter.name);
     }

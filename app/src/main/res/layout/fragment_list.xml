@@ -10,9 +10,11 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvCEPList"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="45dp">
     </android.support.v7.widget.RecyclerView>
 
+    <!--
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/btnAddItem"
         android:layout_width="wrap_content"
@@ -21,4 +23,5 @@
         android:layout_margin="@dimen/fab_margin"
         app:backgroundTint="@android:color/primary_text_light"
         app:srcCompat="@android:drawable/ic_input_add"/>
+    -->
 </FrameLayout>

@@ -1,5 +1,8 @@
 package com.rodriguezpacojr.winestore;
 
+import android.app.ProgressDialog;
+import android.os.Handler;
+
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -29,6 +32,8 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import android.support.v7.app.AlertDialog;
+import android.content.DialogInterface;
 
 public class LoginActivity extends AppCompatActivity implements Response.Listener<String>, Response.ErrorListener {
 
@@ -39,12 +44,16 @@ public class LoginActivity extends AppCompatActivity implements Response.Listene
 
     private RequestQueue requestQueue;
     private StringRequest stringRequest;
+    private android.app.ProgressDialog progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+
+        edtuser.setText("user1");
+        edtpassword.setText("user1");
 
         requestQueue = Volley.newRequestQueue(this);
     }
@@ -53,25 +62,6 @@ public class LoginActivity extends AppCompatActivity implements Response.Listene
     public void onErrorResponse(VolleyError error)
     {
         Log.e("volley_error", error.toString());
-    }
-
-    @Override
-    public void onResponse(String response) {
-        Log.d("volley_response", response);
-        try {
-            JSONObject jsonObject = new JSONObject(response);
-            String token = jsonObject.getString("token");
-
-            Setup.setToken(token);
-
-            if (!token.equalsIgnoreCase("Access Denied"))
-                startActivity(new Intent(this, SplashScreenActivity.class));
-            else
-                Toast.makeText(this, "Access Denied", Toast.LENGTH_SHORT).show();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     @OnClick(R.id.btnlogIn)
@@ -91,7 +81,7 @@ public class LoginActivity extends AppCompatActivity implements Response.Listene
         String password = edtpassword.getText().toString();
         URL += user + "/" + password;
 
-        setup.setUSER(user);
+        Setup.setUserName(user);
         stringRequest = new StringRequest(Request.Method.GET, URL, this, this){
             @Override
             public Map<String, String> getHeaders () {
@@ -107,6 +97,49 @@ public class LoginActivity extends AppCompatActivity implements Response.Listene
     }
 
     @Override
+    public void onResponse(String response) {
+        Log.d("volley_response", response);
+        try {
+            JSONObject jsonObject = new JSONObject(response);
+            String token = jsonObject.getString("token");
+
+            Setup.setToken(token);
+
+            if (!token.equalsIgnoreCase("Access Denied")) {
+                progressBar = new android.app.ProgressDialog(this);
+                progressBar.setCancelable(false);
+                progressBar.setMessage("Get Started...");
+                progressBar.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                progressBar.setProgress(0);
+                progressBar.setMax(100);
+                progressBar.show();
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        progressBar.cancel();
+
+                        Setup setup = new Setup();
+                        Intent intInicio;
+
+                        if (setup.getUserName().equals("admin"))
+                            intInicio = new Intent(LoginActivity.this, HomeAdminActivity.class);
+                        else
+                            intInicio = new Intent(LoginActivity.this, RoutesActivity.class);
+
+                        intInicio.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intInicio);
+                    }
+                }, 3000);
+            }
+            else
+                Toast.makeText(this, "Access Denied", Toast.LENGTH_SHORT).show();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_login, menu);
@@ -117,10 +150,33 @@ public class LoginActivity extends AppCompatActivity implements Response.Listene
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.itmSettings:
-                Intent intConf = new Intent(this, SetIpActivity.class);
-                startActivity(intConf);
+                openSetting();
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    void openSetting() {
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder(this);
+        View mView = getLayoutInflater().inflate(R.layout.activity_set_ip, null);
+
+        final EditText edtipAddress = (EditText) mView.findViewById(R.id.edtipAddress);
+        final EditText edtportNumber = (EditText) mView.findViewById(R.id.edtportNumber);
+        edtipAddress.setText("192.168.43.86");
+        edtportNumber.setText("8080");
+
+        mBuilder.setView(mView)
+        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+                String ip = edtipAddress.getText().toString();
+                String port = edtportNumber.getText().toString();
+                Setup setup = new Setup();
+                setup.setIpAddress(ip);
+                setup.setPortNumber(port);
+            }
+        });
+        AlertDialog dialog = mBuilder.create();
+        dialog.show();
     }
 }

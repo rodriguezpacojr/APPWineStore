@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.rodriguezpacojr.winestore.HomeAdminActivity;
 import com.rodriguezpacojr.winestore.R;
+import com.rodriguezpacojr.winestore.admin.CRUDCustomer;
 import com.rodriguezpacojr.winestore.admin.CRUDRoute;
 import com.rodriguezpacojr.winestore.admin.ListRoutesFragment;
 import com.rodriguezpacojr.winestore.models.Route;
@@ -86,8 +87,6 @@ public class RoutesListAdapter extends RecyclerView.Adapter<RoutesListAdapter.ro
                                     CRUDRoute objR = new CRUDRoute();
                                     objR.deleteRoute(route.getKeyRoute());
                                     Toast.makeText(context, "The Route was deleted", Toast.LENGTH_SHORT).show();
-
-
                             }
                         })
                         .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

@@ -92,12 +92,15 @@ public class CRUDEmployee extends AppCompatActivity implements Response.Listener
         requestQueue = Volley.newRequestQueue(this);
         if (EmployeesListAdapter.flagUpdate)
             fillFields();
+        else
+                btnRegister.setText("REGISTER");
         init();
 
         calendars();
     }
 
     void fillFields(){
+        btnRegister.setText("UPDATE");
         textView.setText("Update Employee");
         edtname.setText(EmployeesListAdapter.name);
         edtlastName.setText(EmployeesListAdapter.lastName);

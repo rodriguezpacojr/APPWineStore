@@ -15,6 +15,8 @@ public class Product {
     private double salesPrice;
     private String photo;
     private String TypeProduct;
+    private Integer availables;
+    private Integer quantity;
 
     public Product(){
     }
@@ -89,5 +91,21 @@ public class Product {
 
     public void setTypeProduct(String TypeProduct) {
         this.TypeProduct = TypeProduct;
+    }
+
+    public Integer getAvailables() {
+        return availables;
+    }
+
+    public void setAvailables(Integer availables) {
+        this.availables = availables;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
     }
 }

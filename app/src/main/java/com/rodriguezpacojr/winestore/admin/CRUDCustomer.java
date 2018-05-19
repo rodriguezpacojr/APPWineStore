@@ -117,6 +117,8 @@ public class CRUDCustomer extends AppCompatActivity implements Response.Listener
         requestQueue = Volley.newRequestQueue(this);
         if (CustomerListAdapter.flagUpdate)
             fillFields();
+        else
+            btnRegister.setText("REGISTER");
         init();
 
 
@@ -178,6 +180,7 @@ public class CRUDCustomer extends AppCompatActivity implements Response.Listener
     }
 
     void fillFields(){
+        btnRegister.setText("UPDATE");
         textView.setText("Update Customer");
         edtname.setText(CustomerListAdapter.name);
         edtlastName.setText(CustomerListAdapter.lastName);
@@ -360,7 +363,6 @@ public class CRUDCustomer extends AppCompatActivity implements Response.Listener
         };
         ListCustomersFragment.requestQueue.add(stringRequest);
     }
-
 
     public static double getLongitudeGPS() {
         return longitudeGPS;

@@ -14,7 +14,7 @@ public class SplashScreenActivity extends AppCompatActivity {
     ProgressBar pbwelcome;
 
 
-    public static Activity activity;
+    private   Activity activity  = this;
     private Threads objT;
 
     @Override
@@ -29,7 +29,7 @@ public class SplashScreenActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash_screen);
 
         ButterKnife.bind(this);
-        objT = new Threads(pbwelcome,this);
+        objT = new Threads(pbwelcome,this, activity);
         objT.execute();
     }
 

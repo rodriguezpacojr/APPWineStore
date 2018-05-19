@@ -81,9 +81,12 @@ public class CRUDProduct extends AppCompatActivity implements Response.Listener<
 
         if (ProductsListAdapter.flatUpdate)
             fillFields();
+        else
+            btnRegister.setText("REGISTER");
     }
 
     void fillFields(){
+        btnRegister.setText("UPDATE");
         tvtittle.setText("Update Product");
         edtnameProduct.setText(ProductsListAdapter.name);
         edtcolor.setText(ProductsListAdapter.color);
@@ -146,6 +149,7 @@ public class CRUDProduct extends AppCompatActivity implements Response.Listener<
             }
         });
     }
+
     @Override
     public void onErrorResponse(VolleyError error) {
         Log.e("Error", error.toString());
@@ -179,6 +183,8 @@ public class CRUDProduct extends AppCompatActivity implements Response.Listener<
             try {
                 if (ProductsListAdapter.flatUpdate)
                     jsonObject.put("keyProduct", ProductsListAdapter.key);
+                else
+                    jsonObject.put("availables", stock);
 
                 jsonObject.put("name", name);
                 jsonObject.put("ml", lts);

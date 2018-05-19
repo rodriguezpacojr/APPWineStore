@@ -1,5 +1,6 @@
 package com.rodriguezpacojr.winestore;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -14,10 +15,12 @@ import java.util.Set;
 public class Threads extends AsyncTask<Void, Integer, Void> {
     private ProgressBar pbwelcome;
     private Context context;
+    private Activity activity;
 
-    public Threads(ProgressBar pbwelcome, Context context) {
+    public Threads(ProgressBar pbwelcome, Context context, Activity activity) {
         this.pbwelcome = pbwelcome;
         this.context = context;
+        this.activity = activity;
     }
 
     @Override
@@ -31,12 +34,14 @@ public class Threads extends AsyncTask<Void, Integer, Void> {
         Setup setup = new Setup();
         Intent intInicio;
 
-        if (setup.getUSER().equals("admin"))
+        if (setup.getUserName().equals("admin"))
             intInicio = new Intent(context, HomeAdminActivity.class);
         else
             intInicio = new Intent(context, RoutesActivity.class);
+
         intInicio.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         context.startActivity(intInicio);
+        activity.finish();
     }
 
     @Override

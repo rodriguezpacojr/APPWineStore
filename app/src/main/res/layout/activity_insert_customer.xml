@@ -18,6 +18,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="25dp"
             android:text="Insert Customer"
+            android:textColor="@color/colorPrimary"
             android:textAlignment="center"
             android:textSize="25dp"
             android:textStyle="bold" />
@@ -79,7 +80,7 @@
             android:layout_below="@id/tillastname"
             android:layout_marginTop="12dp"
             android:layout_toRightOf="@id/tilborndate"
-            android:src="@drawable/ic_calendar_black_24dp" />
+            android:src="@drawable/ic_calendar_black_24dp"/>
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/tilemail"
@@ -230,13 +231,14 @@
 
         <Button
             android:id="@+id/btnRegister"
-            android:layout_width="150dp"
+            android:layout_width="200dp"
             android:layout_height="50dp"
             android:layout_below="@+id/longitudeValueGPS"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="15dp"
             android:backgroundTint="@color/colorPrimaryDark"
-            android:text="Register"
+            android:textColor="@color/colorWhite"
+            android:text="Insert"
             android:textSize="18dp" />
     </RelativeLayout>
 </ScrollView>

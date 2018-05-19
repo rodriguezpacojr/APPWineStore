@@ -40,7 +40,7 @@ public class ListRoutesFragment extends Fragment implements Response.Listener<St
     private RecyclerView rvroute;
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
-    private FloatingActionButton btnAddItem;
+    //private FloatingActionButton btnAddItem;
 
     public static RequestQueue requestQueue;
     List<Route> routeList;
@@ -61,7 +61,7 @@ public class ListRoutesFragment extends Fragment implements Response.Listener<St
         layoutManager = new LinearLayoutManager(getActivity());
         rvroute.setLayoutManager(layoutManager);
 
-        btnAddItem = (FloatingActionButton) v.findViewById(R.id.btnAddItem);
+      /*  btnAddItem = (FloatingActionButton) v.findViewById(R.id.btnAddItem);
         btnAddItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -71,7 +71,7 @@ public class ListRoutesFragment extends Fragment implements Response.Listener<St
                 getActivity().finish();
             }
         });
-
+*/
         return v;
     }
 

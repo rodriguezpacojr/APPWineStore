@@ -1,4 +1,4 @@
-package com.rodriguezpacojr.winestore;
+package com.rodriguezpacojr.winestore.helpers;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

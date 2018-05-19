@@ -37,7 +37,7 @@ public class ListEmployeesFragment extends Fragment implements Response.Listener
     private RecyclerView rvperson;
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
-    private FloatingActionButton btnAddItem;
+    //private FloatingActionButton btnAddItem;
 
     public static RequestQueue requestQueue;
     List<Person> personList;
@@ -57,17 +57,6 @@ public class ListEmployeesFragment extends Fragment implements Response.Listener
         layoutManager = new LinearLayoutManager(getActivity());
         rvperson.setLayoutManager(layoutManager);
 
-
-        btnAddItem = (FloatingActionButton) v.findViewById(R.id.btnAddItem);
-        btnAddItem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                EmployeesListAdapter.flagUpdate = false;
-                Intent intent = new Intent(getActivity(), CRUDEmployee.class);
-                startActivity(intent);
-                getActivity().finish();
-            }
-        });
         return v;
     }
 

@@ -26,6 +26,8 @@ import com.android.volley.toolbox.Volley;
 
 import org.json.JSONObject;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -52,8 +54,8 @@ public class LoginActivity extends AppCompatActivity implements Response.Listene
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
 
-        edtuser.setText("user1");
-        edtpassword.setText("user1");
+        edtuser.setText("user2");
+        edtpassword.setText("user2");
 
         requestQueue = Volley.newRequestQueue(this);
     }
@@ -74,11 +76,32 @@ public class LoginActivity extends AppCompatActivity implements Response.Listene
         }
     }
 
+    private String getMD5(final String s) {
+        try {
+            MessageDigest digest = java.security.MessageDigest.getInstance("MD5");
+            digest.update(s.getBytes());
+            byte messageDigest[] = digest.digest();
+            StringBuilder hexString = new StringBuilder();
+            for(int i = 0; i < messageDigest.length; i++) {
+                String h = Integer.toHexString(0xFF & messageDigest[i]);
+                while(h.length() < 2) {
+                    h = "0" + h;
+                }
+                hexString.append(h);
+            }
+            return hexString.toString();
+        } catch (NoSuchAlgorithmException e) {
+            Log.e("MD5", "md5() NoSuchAlgorithmException: " + e.getMessage());
+        }
+        return "";
+    }
+
     void validate() {
         Setup setup = new Setup();
         String URL = "http://" + setup.getIpAddress() + ":" + setup.getPortNumber() + "/IosAnd/api/user/validate/";
         String user = edtuser.getText().toString();
         String password = edtpassword.getText().toString();
+        password = getMD5(password);
         URL += user + "/" + password;
 
         Setup.setUserName(user);
@@ -102,6 +125,7 @@ public class LoginActivity extends AppCompatActivity implements Response.Listene
         try {
             JSONObject jsonObject = new JSONObject(response);
             String token = jsonObject.getString("token");
+            final String role = jsonObject.getString("role");
 
             Setup.setToken(token);
 
@@ -117,11 +141,8 @@ public class LoginActivity extends AppCompatActivity implements Response.Listene
                     @Override
                     public void run() {
                         progressBar.cancel();
-
-                        Setup setup = new Setup();
                         Intent intInicio;
-
-                        if (setup.getUserName().equals("admin"))
+                        if (role.equals("admin"))
                             intInicio = new Intent(LoginActivity.this, HomeAdminActivity.class);
                         else
                             intInicio = new Intent(LoginActivity.this, RoutesActivity.class);

@@ -33,7 +33,7 @@ public class EmployeesListAdapter extends RecyclerView.Adapter<EmployeesListAdap
 
     private List<Person> personsList;
     Context context;
-    public static int key;
+    public static int key, keyUser;
     public static String name, lastName, bornDate, phone, email, entryDate, rfc;
     public static Double latitude, longitude;
     public static boolean flagUpdate = false;
@@ -157,6 +157,7 @@ public class EmployeesListAdapter extends RecyclerView.Adapter<EmployeesListAdap
                 email = person.getEmail();
                 rfc = person.getRfc();
                 entryDate = person.getEntryDate();
+                keyUser = person.getKeyUser();
 
                 Intent intent= new Intent(context, CRUDEmployee.class);
                 context.startActivity(intent);

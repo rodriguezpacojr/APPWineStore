@@ -1,5 +1,6 @@
 package com.rodriguezpacojr.winestore.admin;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -18,7 +19,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.rodriguezpacojr.winestore.LoginActivity;
 import com.rodriguezpacojr.winestore.R;
+import com.rodriguezpacojr.winestore.RoutesActivity;
 import com.rodriguezpacojr.winestore.Setup;
 import com.rodriguezpacojr.winestore.adapters.CustomerListAdapter;
 import com.rodriguezpacojr.winestore.models.Person;
@@ -37,7 +40,6 @@ public class ListCustomersFragment extends Fragment implements Response.Listener
     private RecyclerView rvperson;
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
-    //private FloatingActionButton btnAddItem;
 
     public static RequestQueue requestQueue;
     List<Person> personList;
@@ -67,31 +69,51 @@ public class ListCustomersFragment extends Fragment implements Response.Listener
 
     @Override
     public void onResponse(String response) {
-        Person obj;
-        try {
-            JSONObject jsonObject = new JSONObject(response);
-            JSONArray jsonArray = jsonObject.getJSONArray("customer");
+        Log.d("RESPONSE_c", response);
+        if (response != null) {
+            Person obj;
+            try {
+                JSONObject jsonObject = new JSONObject(response);
+                JSONArray jsonArray = jsonObject.getJSONArray("customer");
 
-            for (int i=0; i<jsonArray.length(); i++) {
-                JSONObject jsonObjectPerson = jsonArray.getJSONObject(i);
+                for (int i=0; i<jsonArray.length(); i++) {
+                    JSONObject jsonObjectPerson = jsonArray.getJSONObject(i);
 
-                obj = new Person();
-                    obj.setKeyPerson(jsonObjectPerson.getInt("keyCustomer"));
-                    obj.setName(jsonObjectPerson.getString("name"));
-                    obj.setLastName(jsonObjectPerson.getString("lastName"));
-                    obj.setBornDate(jsonObjectPerson.getString("bornDate").substring(0,10));
-                    obj.setRfc(jsonObjectPerson.getString("RFC"));
-                    obj.setPhone(jsonObjectPerson.getString("phone"));
-                    obj.setEmail(jsonObjectPerson.getString("email"));
-                    obj.setEntryDate(jsonObjectPerson.getString("entryDate").substring(0,10));
-                    obj.setLatitude(jsonObjectPerson.getDouble("latitude"));
-                    obj.setLongitude(jsonObjectPerson.getDouble("longitude"));
-                personList.add(obj);
+                    obj = new Person();
+                        obj.setKeyPerson(jsonObjectPerson.getInt("keyCustomer"));
+                        obj.setName(jsonObjectPerson.getString("name"));
+                        obj.setLastName(jsonObjectPerson.getString("lastName"));
+                        obj.setBornDate(jsonObjectPerson.getString("bornDate").substring(0,10));
+                        obj.setRfc(jsonObjectPerson.getString("RFC"));
+                        obj.setPhone(jsonObjectPerson.getString("phone"));
+                        obj.setEmail(jsonObjectPerson.getString("email"));
+                        obj.setEntryDate(jsonObjectPerson.getString("entryDate").substring(0,10));
+                        obj.setLatitude(jsonObjectPerson.getDouble("latitude"));
+                        obj.setLongitude(jsonObjectPerson.getDouble("longitude"));
+                        obj.setKeyRoute(jsonObjectPerson.getInt("keyRoute"));
+                    personList.add(obj);
+                }
+                adapter = new CustomerListAdapter(personList, getActivity());
+                rvperson.setAdapter(adapter);
+            }catch (JSONException e){
+                Log.e("Error",e.toString());
             }
-            adapter = new CustomerListAdapter(personList, getActivity());
-            rvperson.setAdapter(adapter);
-        }catch (JSONException e){
-            Log.e("Error",e.toString());
+        }
+        else if (response == ""){
+            final android.app.AlertDialog.Builder dialog = new android.app.AlertDialog.Builder(getActivity());
+            dialog.setTitle("Warnning!")
+                    .setMessage("Your session has ended!\nYou must Login again!")
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+
+                            Intent intInicio = new Intent(getContext(), LoginActivity.class);
+                            intInicio.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intInicio);
+                            getActivity().finish();
+                        }
+                    });
+            dialog.show();
         }
     }
 

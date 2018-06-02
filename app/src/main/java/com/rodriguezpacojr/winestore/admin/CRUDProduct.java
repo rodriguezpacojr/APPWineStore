@@ -1,5 +1,6 @@
 package com.rodriguezpacojr.winestore.admin;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -22,7 +23,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.rodriguezpacojr.winestore.HomeAdminActivity;
+import com.rodriguezpacojr.winestore.LoginActivity;
 import com.rodriguezpacojr.winestore.R;
+import com.rodriguezpacojr.winestore.RoutesActivity;
 import com.rodriguezpacojr.winestore.Setup;
 import com.rodriguezpacojr.winestore.adapters.ProductsListAdapter;
 
@@ -115,28 +118,54 @@ public class CRUDProduct extends AppCompatActivity implements Response.Listener<
 
     @Override
     public void onResponse(String response) {
-        arridTP.clear();
-        arridTP.clear();
+        if (response != null) {
+            arridTP.clear();
+            arridTP.clear();
+            try{
+                JSONObject jsonObject = new JSONObject(response);
+                JSONArray jsonArray = jsonObject.getJSONArray("typeproduct");
 
-        try{
-            JSONObject jsonObject = new JSONObject(response);
-            JSONArray jsonArray = jsonObject.getJSONArray("typeproduct");
-
-            for (int i=0; i<jsonArray.length(); i++){
-                JSONObject jsonObjectTP = jsonArray.getJSONObject(i);
-                arridTP.add(jsonObjectTP.getInt("keyTypeProduct"));
-                arrTP.add(jsonObjectTP.getString("nameTypeProduct"));
+                for (int i=0; i<jsonArray.length(); i++){
+                    JSONObject jsonObjectTP = jsonArray.getJSONObject(i);
+                    arridTP.add(jsonObjectTP.getInt("keyTypeProduct"));
+                    arrTP.add(jsonObjectTP.getString("nameTypeProduct"));
+                }
+                getSpn();
+            }catch (JSONException e){
+                Log.e("Error",e.toString());
             }
-            getSpn();
-        }catch (JSONException e){
-            Log.e("Error",e.toString());
+        }
+        else {
+            final android.app.AlertDialog.Builder dialog = new android.app.AlertDialog.Builder(this);
+            dialog.setTitle("Warnning!")
+                    .setMessage("Your session has ended!\nYou must Login again!")
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+
+                            Intent intInicio = new Intent(CRUDProduct.this, LoginActivity.class);
+                            intInicio.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intInicio);
+                            finish();
+                        }
+                    });
+            dialog.show();
         }
     }
 
     private void getSpn(){
         ArrayAdapter<String> adapterC =  new ArrayAdapter(this,android.R.layout.simple_spinner_dropdown_item,arrTP);
         spnCategory.setAdapter(adapterC);
-        spnCategory.setSelection(0);
+        if (ProductsListAdapter.flatUpdate){
+            int posi = 0;
+            for (int i=0; i < arridTP.size(); i++)
+                if (arridTP.get(i) == ProductsListAdapter.keyTypeProdut)
+                    posi = i;
+            spnCategory.setSelection(posi);
+        }
+        else
+            spnCategory.setSelection(0);
+
         spnCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
         {
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id)

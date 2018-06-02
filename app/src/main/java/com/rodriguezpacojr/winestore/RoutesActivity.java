@@ -85,35 +85,53 @@ public class RoutesActivity extends AppCompatActivity implements Response.Listen
 
     @Override
     public void onResponse(String response) {
-        Route objRoute;
-        try{
-            JSONObject jsonObject = new JSONObject(response);
-            JSONArray jsonArray = jsonObject.getJSONArray("route");
-            for (int i=0; i<jsonArray.length(); i++){
-                JSONObject jsonObjectRoute = jsonArray.getJSONObject(i);
-                objRoute = new Route();
-                objRoute.setNumber(jsonObjectRoute.getInt("keyRoute"));
-                objRoute.setDestination(jsonObjectRoute.getString("destination"));
-                objRoute.setCustomers(jsonObjectRoute.getInt("customers"));
-                routeList.add(objRoute);
+        if (response != null) {
+            Route objRoute;
+            try {
+                JSONObject jsonObject = new JSONObject(response);
+                JSONArray jsonArray = jsonObject.getJSONArray("route");
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject jsonObjectRoute = jsonArray.getJSONObject(i);
+                    objRoute = new Route();
+                    objRoute.setNumber(jsonObjectRoute.getInt("keyRoute"));
+                    objRoute.setDestination(jsonObjectRoute.getString("destination"));
+                    objRoute.setCustomers(jsonObjectRoute.getInt("customers"));
+                    routeList.add(objRoute);
+                }
+                adapter = new RoutesAdapter(routeList, this);
+                rvroute.setAdapter(adapter);
+
+                adapter.setOnItemClickListener(
+                        new RoutesAdapter.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(int position) {
+                                routeNum = routeList.get(position).getKeyRoute();
+
+                                RoutesOnMapActivity.setKeyRoute(routeList.get(position).getNumber());
+                                Intent intaboutOf = new Intent(RoutesActivity.this, RoutesOnMapActivity.class);
+                                RoutesActivity.this.startActivity(intaboutOf);
+                                finish();
+                            }
+                        });
+            } catch (JSONException e) {
+                Log.e("Error", e.toString());
             }
-            adapter = new RoutesAdapter(routeList, this);
-            rvroute.setAdapter(adapter);
-
-            adapter.setOnItemClickListener(
-                    new RoutesAdapter.OnItemClickListener() {
+        }
+        else {
+            final android.app.AlertDialog.Builder dialog = new android.app.AlertDialog.Builder(this);
+            dialog.setTitle("Warnning!")
+                    .setMessage("Your session has ended!\nYou must Login again!")
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                         @Override
-                        public void onItemClick(int position) {
-                            routeNum = routeList.get(position).getKeyRoute();
+                        public void onClick(DialogInterface paramDialogInterface, int paramInt) {
 
-                            RoutesOnMapActivity.setKeyRoute(routeList.get(position).getNumber());
-                            Intent intaboutOf = new Intent(RoutesActivity.this, RoutesOnMapActivity.class);
-                            RoutesActivity.this.startActivity(intaboutOf);
+                            Intent intInicio = new Intent(RoutesActivity.this, LoginActivity.class);
+                            intInicio.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intInicio);
                             finish();
                         }
                     });
-        }catch (JSONException e){
-            Log.e("Error",e.toString());
+            dialog.show();
         }
     }
 

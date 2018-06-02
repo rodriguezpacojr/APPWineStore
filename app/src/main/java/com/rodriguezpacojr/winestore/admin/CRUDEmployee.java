@@ -1,6 +1,7 @@
 package com.rodriguezpacojr.winestore.admin;
 
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -25,7 +26,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.rodriguezpacojr.winestore.HomeAdminActivity;
+import com.rodriguezpacojr.winestore.LoginActivity;
 import com.rodriguezpacojr.winestore.R;
+import com.rodriguezpacojr.winestore.RoutesActivity;
 import com.rodriguezpacojr.winestore.Setup;
 import com.rodriguezpacojr.winestore.adapters.EmployeesListAdapter;
 
@@ -184,28 +187,54 @@ public class CRUDEmployee extends AppCompatActivity implements Response.Listener
 
     @Override
     public void onResponse(String response) {
-        arridCi.clear(); arrCi.clear();
+        if (response != null) {
+            arridCi.clear(); arrCi.clear();
+            try{
+                JSONObject jsonObject = new JSONObject(response);
+                JSONArray jsonArrayG = jsonObject.getJSONArray("user");
 
-        try{
-            JSONObject jsonObject = new JSONObject(response);
-            JSONArray jsonArrayG = jsonObject.getJSONArray("user");
+                for (int i=0; i<jsonArrayG.length(); i++){
+                    JSONObject jsonObjectTP = jsonArrayG.getJSONObject(i);
+                    arridCi.add(jsonObjectTP.getInt("keyUser"));
+                    arrCi.add(jsonObjectTP.getString("userName"));
+                }
 
-            for (int i=0; i<jsonArrayG.length(); i++){
-                JSONObject jsonObjectTP = jsonArrayG.getJSONObject(i);
-                arridCi.add(jsonObjectTP.getInt("keyUser"));
-                arrCi.add(jsonObjectTP.getString("userName"));
+                spnCity();
+            }catch (JSONException e){
+                Log.e("Error",e.toString());
             }
+        }
+        else {
+            final android.app.AlertDialog.Builder dialog = new android.app.AlertDialog.Builder(this);
+            dialog.setTitle("Warnning!")
+                    .setMessage("Your session has ended!\nYou must Login again!")
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface paramDialogInterface, int paramInt) {
 
-            spnCity();
-        }catch (JSONException e){
-            Log.e("Error",e.toString());
+                            Intent intInicio = new Intent(CRUDEmployee.this, LoginActivity.class);
+                            intInicio.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intInicio);
+                            finish();
+                        }
+                    });
+            dialog.show();
         }
     }
 
     private void spnCity(){
         ArrayAdapter<String> adapterC =  new ArrayAdapter(this,android.R.layout.simple_spinner_dropdown_item,arrCi);
         spnUser.setAdapter(adapterC);
-        spnUser.setSelection(0);
+        if (EmployeesListAdapter.flagUpdate){
+            int posi = 0;
+            for (int i=0; i < arridCi.size(); i++)
+                if (arridCi.get(i) == EmployeesListAdapter.keyUser)
+                    posi = i;
+            spnUser.setSelection(posi);
+        }
+        else
+            spnUser.setSelection(0);
+
         spnUser.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
         {
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id)

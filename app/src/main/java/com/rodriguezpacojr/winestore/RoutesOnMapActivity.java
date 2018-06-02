@@ -90,29 +90,47 @@ public class RoutesOnMapActivity extends AppCompatActivity implements OnMapReady
 
     @Override
     public void onResponse(String response) {
-        try {
-            JSONObject objectJSON = new JSONObject(response);
-            JSONArray items = objectJSON.getJSONArray("customer");
+        if (response != null) {
+            try {
+                JSONObject objectJSON = new JSONObject(response);
+                JSONArray items = objectJSON.getJSONArray("customer");
 
-            markers = new Marker[items.length()];
+                markers = new Marker[items.length()];
 
-            for (int i=0; i < items.length(); i++){
-                JSONObject place = items.getJSONObject(i);
+                for (int i=0; i < items.length(); i++){
+                    JSONObject place = items.getJSONObject(i);
 
-                coordinate = new LatLng(place.getDouble("latitude"), place.getDouble("longitude"));
-                String name = place.getString("name") +  " " + place.getString("lastName");
-                int key = place.getInt("keyCustomer");
-                markers[i] = mMap.addMarker(
-                        new MarkerOptions()
-                                .position(coordinate)
-                                .title(name)
-                                .snippet(key+""));
+                    coordinate = new LatLng(place.getDouble("latitude"), place.getDouble("longitude"));
+                    String name = place.getString("name") +  " " + place.getString("lastName");
+                    int key = place.getInt("keyCustomer");
+                    markers[i] = mMap.addMarker(
+                            new MarkerOptions()
+                                    .position(coordinate)
+                                    .title(name)
+                                    .snippet(key+""));
+                }
+
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(coordinate, 10));
             }
+            catch (Exception e){
 
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(coordinate, 10));
+            }
         }
-        catch (Exception e){
+        else {
+            final android.app.AlertDialog.Builder dialog = new android.app.AlertDialog.Builder(this);
+            dialog.setTitle("Warnning!")
+                    .setMessage("Your session has ended!\nYou must Login again!")
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface paramDialogInterface, int paramInt) {
 
+                            Intent intInicio = new Intent(RoutesOnMapActivity.this, LoginActivity.class);
+                            intInicio.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intInicio);
+                            finish();
+                        }
+                    });
+            dialog.show();
         }
     }
 

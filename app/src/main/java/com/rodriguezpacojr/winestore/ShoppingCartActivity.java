@@ -94,14 +94,32 @@ public class ShoppingCartActivity extends AppCompatActivity implements Response.
 
     @Override
     public void onResponse(String response) {
-        Log.d("volley_response", response);
-        try {
-            JSONObject jsonObject = new JSONObject(response);
-            keyemployee = jsonObject.getInt("keyEmployee");
-            maxOrder = jsonObject.getInt("keyOrder");
+        if (response != null) {
+            try {
+                JSONObject jsonObject = new JSONObject(response);
+                keyemployee = jsonObject.getInt("keyEmployee");
+                maxOrder = jsonObject.getInt("keyOrder");
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
         }
-        catch (Exception e) {
-            e.printStackTrace();
+        else {
+            final android.app.AlertDialog.Builder dialog = new android.app.AlertDialog.Builder(this);
+            dialog.setTitle("Warnning!")
+                    .setMessage("Your session has ended!\nYou must Login again!")
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+
+                            Intent intInicio = new Intent(ShoppingCartActivity.this, LoginActivity.class);
+                            intInicio.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intInicio);
+                            finish();
+
+                        }
+                    });
+            dialog.show();
         }
     }
 

@@ -7,6 +7,7 @@ package com.rodriguezpacojr.winestore.models;
 public class Product {
 
     private Integer keyProduct;
+    private Integer keyTypeProduct;
     private String name;
     private double ml;
     private String color;
@@ -107,5 +108,13 @@ public class Product {
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
+    }
+
+    public Integer getKeyTypeProduct() {
+        return keyTypeProduct;
+    }
+
+    public void setKeyTypeProduct(Integer keyTypeProduct) {
+        this.keyTypeProduct = keyTypeProduct;
     }
 }

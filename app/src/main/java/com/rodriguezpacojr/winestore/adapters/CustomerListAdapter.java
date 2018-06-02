@@ -32,7 +32,7 @@ public class CustomerListAdapter extends RecyclerView.Adapter<CustomerListAdapte
 
     private List<Person> personsList;
     Context context;
-    public static int key;
+    public static int key, keyRoute;
     public static String name, lastName, bornDate, phone, email, entryDate, rfc;
     public static Double latitude, longitude;
     public static boolean flagUpdate = false;
@@ -160,6 +160,7 @@ public class CustomerListAdapter extends RecyclerView.Adapter<CustomerListAdapte
                 entryDate = person.getEntryDate();
                 latitude = person.getLatitude();
                 longitude = person.getLongitude();
+                keyRoute = person.getKeyRoute();
 
                 Intent intent= new Intent(context, CRUDCustomer.class);
                 context.startActivity(intent);

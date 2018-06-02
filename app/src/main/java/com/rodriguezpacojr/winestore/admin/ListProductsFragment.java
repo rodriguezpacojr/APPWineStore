@@ -1,5 +1,6 @@
 package com.rodriguezpacojr.winestore.admin;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -18,6 +19,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.rodriguezpacojr.winestore.LoginActivity;
 import com.rodriguezpacojr.winestore.R;
 import com.rodriguezpacojr.winestore.Setup;
 import com.rodriguezpacojr.winestore.adapters.ProductsListAdapter;
@@ -57,18 +59,6 @@ public class ListProductsFragment extends Fragment implements Response.Listener<
         layoutManager = new LinearLayoutManager(getActivity());
         rvproduct.setLayoutManager(layoutManager);
 
-
-     /*   btnAddItem = (FloatingActionButton) v.findViewById(R.id.btnAddItem);
-        btnAddItem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ProductsListAdapter.flatUpdate = false;
-                Intent intent = new Intent(getActivity(), CRUDProduct.class);
-                startActivity(intent);
-                getActivity().finish();
-            }
-        });
-*/
         return v;
     }
 
@@ -79,29 +69,49 @@ public class ListProductsFragment extends Fragment implements Response.Listener<
 
     @Override
     public void onResponse(String response) {
-        Product objProduct;
-        try{
-            JSONObject jsonObject = new JSONObject(response);
-            JSONArray jsonArray = jsonObject.getJSONArray("product");
+        Log.d("RESPONSE_p", response);
+        if (response != null) {
+            Product objProduct;
+            try{
+                JSONObject jsonObject = new JSONObject(response);
+                JSONArray jsonArray = jsonObject.getJSONArray("product");
 
-            for (int i=0; i<jsonArray.length(); i++){
-                JSONObject jsonObjectProduct = jsonArray.getJSONObject(i);
+                for (int i=0; i<jsonArray.length(); i++){
+                    JSONObject jsonObjectProduct = jsonArray.getJSONObject(i);
 
-                objProduct = new Product();
-                objProduct.setKeyProduct(jsonObjectProduct.getInt("keyProduct"));
-                objProduct.setName(jsonObjectProduct.getString("name"));
-                objProduct.setSalesPrice(jsonObjectProduct.getDouble("salesPrice"));
-                objProduct.setTypeProduct(jsonObjectProduct.getString("tp"));
-                objProduct.setMl(jsonObjectProduct.getDouble("ml"));
-                objProduct.setStock(jsonObjectProduct.getInt("stock"));
-                objProduct.setTaste(jsonObjectProduct.getString("taste"));
-                objProduct.setColor(jsonObjectProduct.getString("color"));
-                productList.add(objProduct);
+                    objProduct = new Product();
+                    objProduct.setKeyProduct(jsonObjectProduct.getInt("keyProduct"));
+                    objProduct.setName(jsonObjectProduct.getString("name"));
+                    objProduct.setSalesPrice(jsonObjectProduct.getDouble("salesPrice"));
+                    objProduct.setTypeProduct(jsonObjectProduct.getString("tp"));
+                    objProduct.setMl(jsonObjectProduct.getDouble("ml"));
+                    objProduct.setStock(jsonObjectProduct.getInt("stock"));
+                    objProduct.setTaste(jsonObjectProduct.getString("taste"));
+                    objProduct.setColor(jsonObjectProduct.getString("color"));
+                    objProduct.setKeyTypeProduct(jsonObjectProduct.getInt("keyTypeProduct"));
+                    productList.add(objProduct);
+                }
+                adapter = new ProductsListAdapter(productList, getActivity());
+                rvproduct.setAdapter(adapter);
+            }catch (JSONException e){
+                Log.e("Error",e.toString());
             }
-            adapter = new ProductsListAdapter(productList, getActivity());
-            rvproduct.setAdapter(adapter);
-        }catch (JSONException e){
-            Log.e("Error",e.toString());
+        }
+        else if (response == ""){
+            final android.app.AlertDialog.Builder dialog = new android.app.AlertDialog.Builder(getActivity());
+            dialog.setTitle("Warnning!")
+                    .setMessage("Your session has ended!\nYou must Login again!")
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+
+                            Intent intInicio = new Intent(getContext(), LoginActivity.class);
+                            intInicio.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intInicio);
+                            getActivity().finish();
+                        }
+                    });
+            dialog.show();
         }
     }
 

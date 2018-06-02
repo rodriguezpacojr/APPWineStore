@@ -84,7 +84,7 @@
             android:textColor="#1a4064"
             android:layout_marginTop="10dp"
             android:layout_below="@+id/ivImage"
-            android:text="Availables: "/>
+            android:text="Stock: "/>
 
         <TextView
             android:id="@+id/tvProductStock"

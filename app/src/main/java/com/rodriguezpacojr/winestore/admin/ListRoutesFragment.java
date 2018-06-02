@@ -1,5 +1,6 @@
 package com.rodriguezpacojr.winestore.admin;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -19,6 +20,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.rodriguezpacojr.winestore.LoginActivity;
 import com.rodriguezpacojr.winestore.R;
 import com.rodriguezpacojr.winestore.Setup;
 import com.rodriguezpacojr.winestore.adapters.RoutesListAdapter;
@@ -40,7 +42,6 @@ public class ListRoutesFragment extends Fragment implements Response.Listener<St
     private RecyclerView rvroute;
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
-    //private FloatingActionButton btnAddItem;
 
     public static RequestQueue requestQueue;
     List<Route> routeList;
@@ -60,18 +61,6 @@ public class ListRoutesFragment extends Fragment implements Response.Listener<St
 
         layoutManager = new LinearLayoutManager(getActivity());
         rvroute.setLayoutManager(layoutManager);
-
-      /*  btnAddItem = (FloatingActionButton) v.findViewById(R.id.btnAddItem);
-        btnAddItem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                RoutesListAdapter.flatUpdate = false;
-                Intent intent = new Intent(getActivity(), CRUDRoute.class);
-                startActivity(intent);
-                getActivity().finish();
-            }
-        });
-*/
         return v;
     }
 
@@ -82,26 +71,45 @@ public class ListRoutesFragment extends Fragment implements Response.Listener<St
 
     @Override
     public void onResponse(String response) {
-        Route objroute;
-        try{
-            JSONObject jsonObject = new JSONObject(response);
-            JSONArray jsonArray = jsonObject.getJSONArray("route");
+        Log.d("RESPONSE_r", response);
+        if (response != null) {
+            Route objroute;
+            try{
+                JSONObject jsonObject = new JSONObject(response);
+                JSONArray jsonArray = jsonObject.getJSONArray("route");
 
-            for (int i=0; i<jsonArray.length(); i++){
-                JSONObject jsonObjectroute = jsonArray.getJSONObject(i);
+                for (int i=0; i<jsonArray.length(); i++){
+                    JSONObject jsonObjectroute = jsonArray.getJSONObject(i);
 
-                objroute = new Route();
-                objroute.setKeyRoute(jsonObjectroute.getInt("keyRoute"));
-                objroute.setKeyEmployee(jsonObjectroute.getInt("keyEmployee"));
-                objroute.setDestination(jsonObjectroute.getString("destination"));
-                String name = jsonObjectroute.getString("employee") +" " +jsonObjectroute.getString("lastName");
-                objroute.setEmployee(name);
-                routeList.add(objroute);
+                    objroute = new Route();
+                    objroute.setKeyRoute(jsonObjectroute.getInt("keyRoute"));
+                    objroute.setKeyEmployee(jsonObjectroute.getInt("keyEmployee"));
+                    objroute.setDestination(jsonObjectroute.getString("destination"));
+                    String name = jsonObjectroute.getString("employee") +" " +jsonObjectroute.getString("lastName");
+                    objroute.setEmployee(name);
+                    routeList.add(objroute);
+                }
+                adapter = new RoutesListAdapter(routeList, getActivity());
+                rvroute.setAdapter(adapter);
+            }catch (JSONException e){
+                Log.e("Error",e.toString());
             }
-            adapter = new RoutesListAdapter(routeList, getActivity());
-            rvroute.setAdapter(adapter);
-        }catch (JSONException e){
-            Log.e("Error",e.toString());
+        }
+        else if (response == ""){
+            final android.app.AlertDialog.Builder dialog = new android.app.AlertDialog.Builder(getActivity());
+            dialog.setTitle("Warnning!")
+                    .setMessage("Your session has ended!\nYou must Login again!")
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+
+                            Intent intInicio = new Intent(getContext(), LoginActivity.class);
+                            intInicio.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intInicio);
+                            getActivity().finish();
+                        }
+                    });
+            dialog.show();
         }
     }
 

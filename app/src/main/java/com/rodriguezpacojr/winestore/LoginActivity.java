@@ -1,6 +1,7 @@
 package com.rodriguezpacojr.winestore;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.Handler;
 
 import android.content.Intent;
@@ -23,6 +24,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.rodriguezpacojr.winestore.admin.CRUDCustomer;
 
 import org.json.JSONObject;
 
@@ -54,8 +56,8 @@ public class LoginActivity extends AppCompatActivity implements Response.Listene
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
 
-        edtuser.setText("user2");
-        edtpassword.setText("user2");
+        edtuser.setText("admin");
+        edtpassword.setText("admin");
 
         requestQueue = Volley.newRequestQueue(this);
     }
@@ -116,7 +118,9 @@ public class LoginActivity extends AppCompatActivity implements Response.Listene
                 return params;
             }
         };
+
         requestQueue.add(stringRequest);
+        System.out.println("DDDDDDDDDDDDDDDDDD: " +requestQueue);
     }
 
     @Override
@@ -172,6 +176,7 @@ public class LoginActivity extends AppCompatActivity implements Response.Listene
         switch (item.getItemId()){
             case R.id.itmSettings:
                 openSetting();
+                //dialogLogout();
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -183,7 +188,7 @@ public class LoginActivity extends AppCompatActivity implements Response.Listene
 
         final EditText edtipAddress = (EditText) mView.findViewById(R.id.edtipAddress);
         final EditText edtportNumber = (EditText) mView.findViewById(R.id.edtportNumber);
-        edtipAddress.setText("192.168.43.86");
+        edtipAddress.setText("192.168.1.86");
         edtportNumber.setText("8080");
 
         mBuilder.setView(mView)

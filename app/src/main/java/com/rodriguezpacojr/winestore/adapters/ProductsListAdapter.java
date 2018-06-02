@@ -28,8 +28,8 @@ public class ProductsListAdapter extends RecyclerView.Adapter<ProductsListAdapte
     private List<Product> productsList;
     Context context;
 
-    public static String name, category, color, taste;
-    public static int key, stock;
+    public static String name, color, taste;
+    public static int key, keyTypeProdut, stock;
     public static boolean flatUpdate = false;
     public static double price, ml;
 
@@ -115,6 +115,7 @@ public class ProductsListAdapter extends RecyclerView.Adapter<ProductsListAdapte
                 color = product.getColor();
                 stock = product.getStock();
                 taste = product.getTaste();
+                keyTypeProdut = product.getKeyTypeProduct();
 
                 Intent intent = new Intent(context, CRUDProduct.class);
                 context.startActivity(intent);

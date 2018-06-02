@@ -36,11 +36,14 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.rodriguezpacojr.winestore.HomeAdminActivity;
+import com.rodriguezpacojr.winestore.LoginActivity;
 import com.rodriguezpacojr.winestore.MapsActivity;
 import com.rodriguezpacojr.winestore.R;
+import com.rodriguezpacojr.winestore.RoutesActivity;
 import com.rodriguezpacojr.winestore.Setup;
 import com.rodriguezpacojr.winestore.adapters.CustomerListAdapter;
 import com.rodriguezpacojr.winestore.adapters.CustomerListAdapter;
+import com.rodriguezpacojr.winestore.adapters.ProductsListAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -223,29 +226,55 @@ public class CRUDCustomer extends AppCompatActivity implements Response.Listener
 
     @Override
     public void onResponse(String response) {
-        arridRo.clear(); arrRo.clear();
+        if (response != null) {
+            arridRo.clear(); arrRo.clear();
+            try {
+                JSONObject jsonObject = new JSONObject(response);
 
-        try {
-            JSONObject jsonObject = new JSONObject(response);
+                JSONArray jsonArrayC = jsonObject.getJSONArray("route");
 
-            JSONArray jsonArrayC = jsonObject.getJSONArray("route");
+                for (int i=0; i<jsonArrayC.length(); i++){
+                    JSONObject jsonObjectTP = jsonArrayC.getJSONObject(i);
+                    arridRo.add(jsonObjectTP.getInt("keyRoute"));
+                    arrRo.add(jsonObjectTP.getString("destination"));
+                }
 
-            for (int i=0; i<jsonArrayC.length(); i++){
-                JSONObject jsonObjectTP = jsonArrayC.getJSONObject(i);
-                arridRo.add(jsonObjectTP.getInt("keyRoute"));
-                arrRo.add(jsonObjectTP.getString("destination"));
+                spnCity();
+            }catch (JSONException e){
+                Log.e("Error",e.toString());
             }
+        }
+        else {
+            final android.app.AlertDialog.Builder dialog = new android.app.AlertDialog.Builder(this);
+            dialog.setTitle("Warnning!")
+                    .setMessage("Your session has ended!\nYou must Login again!")
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface paramDialogInterface, int paramInt) {
 
-            spnCity();
-        }catch (JSONException e){
-            Log.e("Error",e.toString());
+                            Intent intInicio = new Intent(CRUDCustomer.this, LoginActivity.class);
+                            intInicio.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intInicio);
+                            finish();
+                        }
+                    });
+            dialog.show();
         }
     }
 
     private void spnCity(){
         ArrayAdapter<String> adapterC =  new ArrayAdapter(this,android.R.layout.simple_spinner_dropdown_item,arrRo);
         spnRoute.setAdapter(adapterC);
-        spnRoute.setSelection(0);
+        if (CustomerListAdapter.flagUpdate){
+            int posi = 0;
+            for (int i=0; i < arridRo.size(); i++)
+                if (arridRo.get(i) == CustomerListAdapter.keyRoute)
+                    posi = i;
+            spnRoute.setSelection(posi);
+        }
+        else
+            spnRoute.setSelection(0);
+
         spnRoute.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
         {
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id)

@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "509337548163",
+    "firebase_url": "https://winestore-f69af.firebaseio.com",
+    "project_id": "winestore-f69af",
+    "storage_bucket": "winestore-f69af.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:509337548163:android:e2aec5ba479f6fda",
+        "android_client_info": {
+          "package_name": "com.rodriguezpacojr.winestore"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "509337548163-dls1e4r3ejll4mrabbahj99qpg2alfhi.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "509337548163-dls1e4r3ejll4mrabbahj99qpg2alfhi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC_etQPlxCCfstL3vb66q5vkLzBccVrihk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -70,7 +70,7 @@ public class ListProductsFragment extends Fragment implements Response.Listener<
     @Override
     public void onResponse(String response) {
         Log.d("RESPONSE_p", response);
-        if (response != null) {
+        if (!response.isEmpty()) {
             Product objProduct;
             try{
                 JSONObject jsonObject = new JSONObject(response);
@@ -97,7 +97,7 @@ public class ListProductsFragment extends Fragment implements Response.Listener<
                 Log.e("Error",e.toString());
             }
         }
-        else if (response == ""){
+        else {
             final android.app.AlertDialog.Builder dialog = new android.app.AlertDialog.Builder(getActivity());
             dialog.setTitle("Warnning!")
                     .setMessage("Your session has ended!\nYou must Login again!")

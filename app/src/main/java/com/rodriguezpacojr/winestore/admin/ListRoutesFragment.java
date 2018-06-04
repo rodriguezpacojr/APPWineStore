@@ -72,7 +72,7 @@ public class ListRoutesFragment extends Fragment implements Response.Listener<St
     @Override
     public void onResponse(String response) {
         Log.d("RESPONSE_r", response);
-        if (response != null) {
+        if (!response.isEmpty()) {
             Route objroute;
             try{
                 JSONObject jsonObject = new JSONObject(response);
@@ -95,7 +95,7 @@ public class ListRoutesFragment extends Fragment implements Response.Listener<St
                 Log.e("Error",e.toString());
             }
         }
-        else if (response == ""){
+        else {
             final android.app.AlertDialog.Builder dialog = new android.app.AlertDialog.Builder(getActivity());
             dialog.setTitle("Warnning!")
                     .setMessage("Your session has ended!\nYou must Login again!")
